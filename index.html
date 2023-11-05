@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="center-text">
+        <h1>Online Library Management System (OLMS)</h1>
+    </div>
+    <div class="container">
+        <div class="book-list">
+            <h2>Book List</h2>
+            <ul id="bookList">
+                <!-- Existing book items -->
+            </ul>
+        </div>
+        <div class="add-book">
+            <h2>Add New Book</h2>
+            <form onsubmit="addBook(); return false;">
+                <label for="bookTitle">Title:</label>
+                <input type="text" id="bookTitle" name="bookTitle">
+                <label for="bookAuthor">Author:</label>
+                <input type="text" id="bookAuthor" name="bookAuthor">
+                <button type="submit">Add Book</button>
+            </form>
+        </div>
+        <div class="search">
+            <h2>Search for Books</h2>
+            <input type="text" placeholder="Search by title or author">
+            <button>Search</button>
+        </div>
+    </div>
+
+    <script>
+        const addedBooks = []; // To store added books
+
+        function addBook() {
+            const titleInput = document.getElementById("bookTitle");
+            const authorInput = document.getElementById("bookAuthor");
+            const bookList = document.getElementById("bookList");
+
+            // Get the values from the input fields
+            const title = titleInput.value;
+            const author = authorInput.value;
+
+            // Check if the book already exists
+            const isDuplicate = addedBooks.some(book => book.title === title && book.author === author);
+
+            if (isDuplicate) {
+                alert("This book already exists in the list.");
+                return; // Prevent duplicate addition
+            }
+
+            // If it's not a duplicate, add the new book to the list and the array
+            const newBookItem = document.createElement("li");
+            newBookItem.textContent = `${title} by ${author}`;
+            bookList.appendChild(newBookItem);
+
+            addedBooks.push({ title, author });
+
+            // Clear the input fields
+            titleInput.value = "";
+            authorInput.value = "";
+        }
+    </script>
+</body>
+</html>
